@@ -88,4 +88,3 @@ def delete_films_id(id):
     return jsonify({"data": result}), 200
 
 
-app.run(host="0.0.0.0", port=5000)
