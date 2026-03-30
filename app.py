@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 import os
 
-uri = "mongodb://localhost:27017/"
+uri = "mongodb://mongo:27017/"
 client = MongoClient(uri)
 db = client.get_database("films")
 films = db.get_collection("films")
@@ -88,4 +88,4 @@ def delete_films_id(id):
     return jsonify({"data": result}), 200
 
 
-app.run()
+app.run(host="0.0.0.0", port=5000)
