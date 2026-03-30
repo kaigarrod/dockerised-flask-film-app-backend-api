@@ -73,4 +73,19 @@ def put_films_id(id):
     return jsonify({"data": result}), 200
 
 
+@app.route("/api/films/<id>", methods=["DELETE"])
+def delete_films_id(id):
+    try:
+        obj_id = ObjectId(id)
+    except Exception:
+        return jsonify({"error": "invalid id"}), 400
+
+    result = [serialize_film(film)
+              for film in films.find({"_id": obj_id})]
+
+    films.delete_one({"_id": obj_id})
+
+    return jsonify({"data": result}), 200
+
+
 app.run()
