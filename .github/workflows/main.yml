@@ -1,0 +1,17 @@
+name: Remote SSH Pull latest
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 178.128.33.78
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd dockerised-flask-film-app-backend-api
+            git pull
+            docker compose up --build -d
