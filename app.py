@@ -38,4 +38,19 @@ def post_films():
     return jsonify({"data": serialize_film(film) for film in inserted_film})
 
 
+@app.route("/api/films/<id>", methods=["GET"])
+def get_films_id(id):
+    try:
+        ObjectId(id)
+    except Exception:
+        return jsonify({"error": "invalid id"}), 400
+    result = [serialize_film(film)
+              for film in films.find({"_id": ObjectId(id)})]
+
+    if len(result) == 0:
+        return (jsonify({"error": "film not found"})), 404
+    return jsonify({"data": result}), 200
+
+
+
 app.run()
