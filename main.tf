@@ -30,9 +30,21 @@ git clone https://github.com/kaigarrod/dockerised-flask-film-app-backend-api.git
 cd dockerised-flask-film-app-backend-api
 docker compose up -d --build
 EOF
-
 }
 
-output "ip-address" {
-    value = digitalocean_droplet.web.ipv4_address
+resource "digitalocean_reserved_ip" "web" {
+  region = "lon1"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "digitalocean_reserved_ip_assignment" "web" {
+  ip_address = digitalocean_reserved_ip.web.ip_address
+  droplet_id = digitalocean_droplet.web.id
+}
+
+output "reserved_ip" {
+  value = digitalocean_reserved_ip.web.ip_address
 }
