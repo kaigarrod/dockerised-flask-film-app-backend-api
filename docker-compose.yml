@@ -1,9 +1,16 @@
 services:
   api:
     build: ./
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/
   nginx:
     build: ./nginx
     ports:
       - "80:80"
   mongo:
     image: mongo:7
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:

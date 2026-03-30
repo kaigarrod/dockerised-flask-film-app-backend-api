@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 import os
 
-uri = "mongodb://mongo:27017/"
+uri = os.environ.get("MONGO_URI", "mongodb://mongo:27017/")
 client = MongoClient(uri)
 db = client.get_database("films")
 films = db.get_collection("films")
