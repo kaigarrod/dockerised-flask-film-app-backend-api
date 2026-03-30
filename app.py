@@ -23,4 +23,19 @@ def get_films():
     return jsonify({"data": result}), 200
 
 
+@app.route("/api/films", methods=["POST"])
+def post_films():
+    if not request.json or not "title" in request.json or not request.json["title"].strip():
+        return jsonify({"error": "invalid title"}), 400
+
+    result = films.insert_one(
+        {
+            "title": request.json["title"]
+        }
+    )
+
+    inserted_film = films.find({"_id": ObjectId(result.inserted_id)})
+    return jsonify({"data": serialize_film(film) for film in inserted_film})
+
+
 app.run()
