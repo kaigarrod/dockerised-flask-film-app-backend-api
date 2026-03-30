@@ -6,4 +6,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 
-CMD ["python3", "app.py"]
+CMD ["gunicorn", "app:app", "--workers", "4", "--bind", "0.0.0.0:80"]
