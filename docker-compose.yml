@@ -18,6 +18,8 @@ services:
     depends_on:
       api:
         condition: service_healthy
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
   mongo:
     image: mongo:7
     volumes:
