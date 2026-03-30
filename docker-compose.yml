@@ -1,0 +1,7 @@
+services:
+  api:
+    build: ./
+    ports:
+      - "5001:5000"
+  mongo:
+    image: mongo:7
