@@ -1,7 +1,9 @@
 services:
   api:
     build: ./
+  nginx:
+    build: ./nginx
     ports:
-      - "5001:5000"
+      - "80:80"
   mongo:
     image: mongo:7
