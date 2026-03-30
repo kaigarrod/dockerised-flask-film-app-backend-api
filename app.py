@@ -88,3 +88,6 @@ def delete_films_id(id):
     return jsonify({"data": result}), 200
 
 
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200

@@ -3,14 +3,31 @@ services:
     build: ./
     environment:
       - MONGO_URI=mongodb://mongo:27017/
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "http://localhost:5000/health" ]
+      interval: 30s
+      timeout: 30s
+      retries: 5
   nginx:
     build: ./nginx
     ports:
       - "80:80"
+    depends_on:
+      api:
+        condition: service_healthy
   mongo:
     image: mongo:7
     volumes:
       - db-data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.runCommand({ping:1})" ]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
 volumes:
   db-data:
