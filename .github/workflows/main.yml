@@ -8,10 +8,10 @@ jobs:
       - name: Execute remote SSH commands using password
         uses: appleboy/ssh-action@v1
         with:
-          host: 209.97.142.157
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: api.kaigarrod.co.uk
+          username: ubuntu
+          key: ${{ secrets.AWS_SSH_KEY }}
           script: |
             cd dockerised-flask-film-app-backend-api
             git pull
-            docker compose up --build -d
+            sudo docker compose up --build -d
